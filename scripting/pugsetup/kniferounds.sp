@@ -106,7 +106,7 @@ public void EndKnifeRound(bool swap) {
     CloseCvarStorage(g_KnifeCvarRestore);
     g_KnifeCvarRestore = INVALID_HANDLE;
   }
-  CreateTimer(3.0, BeginLO3, _, TIMER_FLAG_NO_MAPCHANGE);
+  CreateTimer(1.0, BeginLO3, _, TIMER_FLAG_NO_MAPCHANGE);
 }
 
 static bool AwaitingDecision(int client, const char[] command) {

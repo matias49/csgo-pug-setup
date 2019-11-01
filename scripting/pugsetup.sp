@@ -1603,6 +1603,7 @@ public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcas
 public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) {
   if (g_GameState == GameState_KnifeRound) {
     ChangeState(GameState_WaitingForKnifeRoundDecision);
+    StartWarmup(true);
     g_KnifeWinner = GetKnifeRoundWinner();
     LogDebug("Set g_KnifeWinner = %d", g_KnifeWinner);
 
@@ -1860,10 +1861,10 @@ public void StartGame() {
 public Action Timer_BeginMatch(Handle timer) {
   if (g_DoKnifeRound) {
     ChangeState(GameState_KnifeRound);
-    CreateTimer(3.0, StartKnifeRound, _, TIMER_FLAG_NO_MAPCHANGE);
+    CreateTimer(1.0, StartKnifeRound, _, TIMER_FLAG_NO_MAPCHANGE);
   } else {
     ChangeState(GameState_GoingLive);
-    CreateTimer(3.0, BeginLO3, _, TIMER_FLAG_NO_MAPCHANGE);
+    CreateTimer(1.0, BeginLO3, _, TIMER_FLAG_NO_MAPCHANGE);
   }
 }
 
