@@ -545,8 +545,14 @@ public void OnMapStart() {
     }
     StartLiveTimer();
   } else {
+    if (!UsingCaptains()) {
+      if (!IsPlayer(g_capt1)) {
     g_capt1 = -1;
+      }
+      if (!IsPlayer(g_capt2) || g_capt1 == g_capt2) {
     g_capt2 = -1;
+      }
+    }
     g_Leader = -1;
     for (int i = 1; i <= MaxClients; i++) {
       g_Ready[i] = false;
