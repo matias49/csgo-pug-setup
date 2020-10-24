@@ -1596,6 +1596,10 @@ public Action Timer_EndMatch(Handle timer) {
   EndMatch(false, false);
 }
 
+public Action Timer_StartWarmup(Handle timer) {
+  StartWarmup(true);
+}
+
 public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcast) {
   CheckAutoSetup();
 }
@@ -1603,7 +1607,6 @@ public Action Event_RoundStart(Event event, const char[] name, bool dontBroadcas
 public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast) {
   if (g_GameState == GameState_KnifeRound) {
     ChangeState(GameState_WaitingForKnifeRoundDecision);
-    StartWarmup(true);
     g_KnifeWinner = GetKnifeRoundWinner();
     LogDebug("Set g_KnifeWinner = %d", g_KnifeWinner);
 
@@ -1617,6 +1620,8 @@ public Action Event_RoundEnd(Event event, const char[] name, bool dontBroadcast)
     char swapCmd[ALIAS_LENGTH];
     FindAliasFromCommand("sm_stay", stayCmd);
     FindAliasFromCommand("sm_swap", swapCmd);
+    
+    CreateTimer(3.0, Timer_StartWarmup, _, TIMER_FLAG_NO_MAPCHANGE);
 
     if (g_DoVoteForKnifeRoundDecisionCvar.IntValue != 0) {
       CreateTimer(20.0, Timer_HandleKnifeDecisionVote, _, TIMER_FLAG_NO_MAPCHANGE);
